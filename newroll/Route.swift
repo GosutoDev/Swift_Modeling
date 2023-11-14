@@ -9,29 +9,27 @@ import Foundation
 
 class Route {
     
+    private let _dayInWeek: Int
+    
     init(isAM: Bool, dayInWeek: Int, ordersPerRoute: Int, hasRegion: Bool) {
         self.ordersPerRoute = ordersPerRoute
-        self.order = Order(isAM: isAM, dayInWeek: dayInWeek)
         self.hasRegion = hasRegion
+        self.isAM = isAM
+        self._dayInWeek = dayInWeek
     }
     
-    var order: Order
-    
+    let isAM: Bool
+            
     var ordersPerRoute: Int
     
     var hasRegion: Bool
     
-    let routeRate = 250
-    
-    let perRouteCarRent = 120
-    
-    var tip: Int {
-        ordersPerRoute * 10
+    var tipTotal: Double {
+        Double(ordersPerRoute) * Rates.averageTip
     }
     
-    var totalEarnPerRoute: Int {
-        return (order.totalOrderRate * ordersPerRoute) + routeRate - perRouteCarRent + tip
+    var totalEarnings: Double {
+        return (OrderPayRate.getOrderPayRate(dayInWeek: _dayInWeek, isAM: isAM) * Double(ordersPerRoute)) + Rates.routeRate - Rates.perRouteCarRent + tipTotal
     }
-    
-    
 }
+
