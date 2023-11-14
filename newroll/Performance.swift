@@ -7,6 +7,17 @@
 
 import Foundation
 
+enum ShiftOption: String {
+    case AllDayOneRouteNoRegion = "AllDayOneRouteNoRegion"
+    case AllDayOneRouteWithRegion = "AllDayOneRouteWithRegion"
+    
+    case PmTwoRouteNoRegion = "PmTwoRouteNoRegion"
+    
+    case PmOneRouteWithRegion = "PmOneRouteWithRegion"
+    case PmOneRouteNoRegion = "PmOneRouteNoRegion"
+    
+}
+
 struct Performance {
     
     var shifts: [Shift] = []
@@ -30,22 +41,7 @@ struct Performance {
         
         return total
     }
-    
-    mutating func fetchData() {
-        let setts = [
-            ("PM One Route", true, false),
-            ("PM Two Route", false, false),
-            ("System 1+1", true, true)
-        ]
         
-        for sett in setts {
-            weekPerformance(isOnlyOneRoute: sett.1, allDay: sett.2)
-            print(sett.0)
-            print("Total earn: \(self.totalEarnPerWeek)")
-            print(" ")
-        }
-    }
-    
     mutating func weekPerformance(isOnlyOneRoute: Bool, allDay: Bool) {
         
         let possibleOption = [1, 3, 4, 6]
@@ -54,32 +50,32 @@ struct Performance {
             let allPossibleShift = getSchifts(index: i, isOnlyOneRoute: isOnlyOneRoute)
             if isOnlyOneRoute && allDay {
                 if possibleOption.contains(where: {$0 == i}) {
-                    if let shift = allPossibleShift["AllDayOneRouteNoRegion"] {
+                    if let shift = allPossibleShift[ShiftOption.AllDayOneRouteNoRegion.rawValue] {
                         shifts.append(shift)
                     }
                 } else {
-                    if let shift = allPossibleShift["AllDayOneRouteWithRegion"] {
+                    if let shift = allPossibleShift[ShiftOption.AllDayOneRouteWithRegion.rawValue] {
                         shifts.append(shift)
                     }
                 }
             } else if !isOnlyOneRoute && !allDay {
                 if possibleOption.contains(where: {$0 == i}) {
-                    if let shift = allPossibleShift["PmTwoRouteNoRegion"] {
+                    if let shift = allPossibleShift[ShiftOption.PmTwoRouteNoRegion.rawValue] {
                         shifts.append(shift)
                     }
                 } else {
-                    if let shift = allPossibleShift["PmOneRouteWithRegion"] {
+                    if let shift = allPossibleShift[ShiftOption.PmOneRouteWithRegion.rawValue] {
                         shifts.append(shift)
                     }
                 }
             } else {
                 
                 if possibleOption.contains(where: {$0 == i}) {
-                    if let shift = allPossibleShift["PmOneRouteNoRegion"] {
+                    if let shift = allPossibleShift[ShiftOption.PmOneRouteNoRegion.rawValue] {
                         shifts.append(shift)
                     }
                 } else {
-                    if let shift = allPossibleShift["PmOneRouteWithRegion"] {
+                    if let shift = allPossibleShift[ShiftOption.PmOneRouteWithRegion.rawValue] {
                         shifts.append(shift)
                     }
                 }
@@ -88,31 +84,35 @@ struct Performance {
     }
     
     func getSchifts(index: Int, isOnlyOneRoute: Bool) -> [String : Shift] {
-        let possibleShift: [String : Shift] = [
-            "AllDayOneRouteNoRegion" : Shift(
+        let shiftsOption: [String : Shift] = [
+            ShiftOption.AllDayOneRouteNoRegion.rawValue : Shift(
                 routes: [
                     Route(isAM: true, dayInWeek: index, ordersPerRoute: 13, hasRegion: false),
                     Route(isAM: false, dayInWeek: index, ordersPerRoute: 13, hasRegion: false)],
                 isOnlyOneRoute: isOnlyOneRoute),
-            "AllDayOneRouteWithRegion" : Shift(
+            
+            ShiftOption.AllDayOneRouteWithRegion.rawValue : Shift(
                 routes: [
                     Route(isAM: true, dayInWeek: index, ordersPerRoute: 13, hasRegion: true),
                     Route(isAM: false, dayInWeek: index, ordersPerRoute: 13, hasRegion: false)],
                 isOnlyOneRoute: isOnlyOneRoute),
-            "PmOneRouteWithRegion" : Shift(
+            
+            ShiftOption.PmOneRouteWithRegion.rawValue : Shift(
                 routes: [
                     Route(isAM: false, dayInWeek: index, ordersPerRoute: 13, hasRegion: true)],
                 isOnlyOneRoute: isOnlyOneRoute),
-            "PmOneRouteNoRegion" : Shift(
+            
+            ShiftOption.PmOneRouteNoRegion.rawValue : Shift(
                 routes: [
                     Route(isAM: false, dayInWeek: index, ordersPerRoute: 13, hasRegion: false)],
                 isOnlyOneRoute: isOnlyOneRoute),
-            "PmTwoRouteNoRegion" : Shift(
+            
+            ShiftOption.PmTwoRouteNoRegion.rawValue : Shift(
                 routes: [
                     Route(isAM: false, dayInWeek: index, ordersPerRoute: 13, hasRegion: false),
                     Route(isAM: false, dayInWeek: index, ordersPerRoute: 13, hasRegion: false)],
                 isOnlyOneRoute: isOnlyOneRoute)
         ]
-        return possibleShift
+        return shiftsOption
     }
 }

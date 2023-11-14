@@ -5,17 +5,21 @@
 //  Created by Tomáš Duchoslav on 08.11.2023.
 //
 
+enum RouteOption: String {
+    case localAM, localPM, regionAM, regionPM
+}
+
 import Foundation
 
 class Route {
     
     init(isAM: Bool, dayInWeek: Int, ordersPerRoute: Int, hasRegion: Bool) {
         self.ordersPerRoute = ordersPerRoute
-        self.order = Order(isAM: isAM, dayInWeek: dayInWeek)
+        self.orderPayRate = OrderPayRate(isAM: isAM, dayInWeek: dayInWeek)
         self.hasRegion = hasRegion
     }
     
-    var order: Order
+    var orderPayRate: OrderPayRate
     
     var ordersPerRoute: Int
     
@@ -30,8 +34,19 @@ class Route {
     }
     
     var totalEarnPerRoute: Int {
-        return (order.totalOrderRate * ordersPerRoute) + routeRate - perRouteCarRent + tip
+        return (orderPayRate.totalOrderRate * ordersPerRoute) + routeRate - perRouteCarRent + tip
     }
     
+    static var routeOptions: [RouteOption : Route] = [:]
     
+    
+//    func getRouteOptions(ordersPerRoute: Int) -> [RouteOption : Route] {
+//        
+//        
+//        for dayInWeek in 1...7 {
+//            let routeOptions = [RouteOption.localAM : Route(isAM: true, dayInWeek: dayInWeek, ordersPerRoute: ordersPerRoute, hasRegion: false)]
+//        }
+//        
+//        
+//    }
 }

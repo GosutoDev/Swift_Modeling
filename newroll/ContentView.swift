@@ -7,8 +7,48 @@
 
 import SwiftUI
 
+enum Pickers {
+    case Pondeli, Utery, Streda, Ctvrtek, Patek, Sobota, Nedele
+}
+
 struct ContentView: View {
+    
+    @State private var selection: String = ""
+    
+    let weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    
     var body: some View {
+        
+        VStack {
+            HStack(spacing: 0) {
+                ForEach(weekdays, id: \.self) { weekday in
+                        Text(weekday)
+                        .font(.system(size: 15))
+                        .lineLimit(0)
+                        .frame(width: 50, height: 50)
+                        .border(Color.black)
+                }
+            }
+            HStack {
+                
+            }
+        }
+        
+        
+
+        
+        
+        
+        testButton
+    }
+}
+
+#Preview {
+    ContentView()
+}
+
+extension ContentView {
+    var testButton: some View {
         Button {
             let setts = [
                 ("PM One Route", true, false),
@@ -29,8 +69,4 @@ struct ContentView: View {
                 .font(.title).bold()
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

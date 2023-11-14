@@ -11,7 +11,7 @@
 
 import Foundation
 
-struct Order {
+struct OrderPayRate {
     
     var totalOrderRate: Int {
         return variableOrderRate + orderBaseRate

@@ -16,7 +16,7 @@ struct Shift {
     var isOnlyOneRoute: Bool
     
     var regionRate: Int {
-        let dayInWeek = routes.first?.order.dayInWeek
+        let dayInWeek = routes.first?.orderPayRate.dayInWeek
         let possibleDays = [2, 5, 7]
         var regionRate = 0
         
@@ -39,7 +39,7 @@ struct Shift {
         let possibleDays = [1, 4, 5, 7]
         
         if !isOnlyOneRoute {
-            if possibleDays.contains(where: {$0 == routes.first?.order.dayInWeek}) {
+            if possibleDays.contains(where: {$0 == routes.first?.orderPayRate.dayInWeek}) {
                 bonusRate = 300
             }
         }
@@ -52,10 +52,10 @@ struct Shift {
         let possibleDays = [6, 7]
         
         if isOnlyOneRoute {
-            if routes.contains(where: { $0.order.isAM == true }) && possibleDays.contains(where: {$0 == routes.first?.order.dayInWeek}) {
+            if routes.contains(where: { $0.orderPayRate.isAM == true }) && possibleDays.contains(where: {$0 == routes.first?.orderPayRate.dayInWeek}) {
                 bonusRate += 150
             }
-            if routes.contains(where: { $0.order.isAM == false }) {
+            if routes.contains(where: { $0.orderPayRate.isAM == false }) {
                 bonusRate += 150
             }
         }
