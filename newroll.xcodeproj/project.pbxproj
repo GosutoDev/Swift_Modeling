@@ -22,6 +22,7 @@
 		A88E4F2D2B04E60F002CBB93 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88E4F2C2B04E60F002CBB93 /* Colors.swift */; };
 		A88E4F2F2B04E6FA002CBB93 /* WeekDaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88E4F2E2B04E6FA002CBB93 /* WeekDaysView.swift */; };
 		A88E4F322B04EDE0002CBB93 /* EachDaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88E4F312B04EDE0002CBB93 /* EachDaysView.swift */; };
+		A88E4F342B04F1E8002CBB93 /* MenuBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88E4F332B04F1E8002CBB93 /* MenuBox.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		A88E4F2C2B04E60F002CBB93 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		A88E4F2E2B04E6FA002CBB93 /* WeekDaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDaysView.swift; sourceTree = "<group>"; };
 		A88E4F312B04EDE0002CBB93 /* EachDaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachDaysView.swift; sourceTree = "<group>"; };
+		A88E4F332B04F1E8002CBB93 /* MenuBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,8 +111,9 @@
 			isa = PBXGroup;
 			children = (
 				A88E4F242B04C4D8002CBB93 /* CalendarView.swift */,
-				A88E4F2E2B04E6FA002CBB93 /* WeekDaysView.swift */,
 				A88E4F312B04EDE0002CBB93 /* EachDaysView.swift */,
+				A88E4F332B04F1E8002CBB93 /* MenuBox.swift */,
+				A88E4F2E2B04E6FA002CBB93 /* WeekDaysView.swift */,
 				A88E4F282B04CB1C002CBB93 /* DateScrollerView.swift */,
 			);
 			path = Views;
@@ -194,6 +197,7 @@
 				A88E4F2F2B04E6FA002CBB93 /* WeekDaysView.swift in Sources */,
 				A88E4F322B04EDE0002CBB93 /* EachDaysView.swift in Sources */,
 				A813CA702AFB989C005F19DF /* ContentView.swift in Sources */,
+				A88E4F342B04F1E8002CBB93 /* MenuBox.swift in Sources */,
 				A813CA6E2AFB989C005F19DF /* newrollApp.swift in Sources */,
 				A88E4F292B04CB1C002CBB93 /* DateScrollerView.swift in Sources */,
 				3B80D4F22AFED6F600DE6393 /* Rates.swift in Sources */,

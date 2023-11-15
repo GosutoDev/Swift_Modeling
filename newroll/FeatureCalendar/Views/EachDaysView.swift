@@ -30,13 +30,7 @@ struct EachDaysView: View {
                     } else if count - start > daysInMonth - 1 {
                         Color.clear
                     } else {
-                        Text("\(count - start + 1)")
-                            .font(.caption)
-                            .foregroundStyle(.black)
-                            .padding(6)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                            .background(.clear)
-                            .border(Color.borderColor)
+                        MenuBox(count: count, start: start)
                     }
                 }
             }
@@ -47,3 +41,4 @@ struct EachDaysView: View {
 #Preview {
     EachDaysView(currentDate: .constant(Date()))
 }
+ 
