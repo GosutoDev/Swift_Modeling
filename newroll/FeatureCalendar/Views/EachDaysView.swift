@@ -30,7 +30,7 @@ struct EachDaysView: View {
                     } else if count - start > daysInMonth - 1 {
                         Color.clear
                     } else {
-                        MenuBox(count: count, start: start)
+                        MenuBox(count: count, start: start, currentDate: $currentDate)
                     }
                 }
             }

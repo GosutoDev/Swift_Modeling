@@ -13,6 +13,7 @@ struct MenuBox: View {
     let start: Int
     
     @State var shiftSelected = ""
+    @Binding var currentDate: Date
     
     let shiftOptions: [String] = ["1+1", "0+1", "0+2", "1+2", "Clear"]
     
@@ -20,7 +21,9 @@ struct MenuBox: View {
         Menu {
             ForEach(shiftOptions, id: \.self) { shift in
                 Button(shift == "Clear" ? "Clear" : "Shift \(shift)") {
-                    shiftSelected = shift == "Clear" ? "" : shift
+                    withAnimation {
+                        shiftSelected = shift == "Clear" ? "" : shift
+                    }
                 }
             }
         } label: {
@@ -39,6 +42,11 @@ struct MenuBox: View {
                         .foregroundStyle(.black)
                 }
         }
+        
+        .onChange(of: currentDate) {
+            shiftSelected = ""
+        }
+        
     }
     
     func getBackgroundColor() -> Color {
@@ -58,5 +66,5 @@ struct MenuBox: View {
 }
 
 #Preview {
-    MenuBox(count: 1, start: 1)
+    MenuBox(count: 1, start: 1, currentDate: .constant(Date()))
 }
