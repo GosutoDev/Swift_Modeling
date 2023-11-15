@@ -15,12 +15,11 @@ struct Shift {
     }
     
     private let _dayInWeek: Int
-        
+    
     var routes: [Route] = []
     
     let perShiftEquipmentRent = 30.0
     
-
     var isOnlyOneRoute: Bool {
         return routes.count == 1
     }
@@ -43,12 +42,13 @@ struct Shift {
         return regionRate
     }
     
+    
     var bonus: Double {
         var bonus = 0.0
         let hasAMRoute = routes.contains(where: { $0.isAM == true })
         let isWeekend = [6,7].contains(_dayInWeek)
         let isBonusDay = [1,4,5,7].contains(_dayInWeek)
-
+        
         if isOnlyOneRoute {
             if hasAMRoute && isWeekend {
                 bonus += 150.0
@@ -61,7 +61,7 @@ struct Shift {
                 bonus += 300.0
             }
         }
-    
+        
         return bonus
     }
     
@@ -74,7 +74,7 @@ struct Shift {
         }
         
         let variableOrderRate = 28.0
-
+        
         var total = baseRate + variableOrderRate
         
         return total
@@ -104,8 +104,8 @@ struct Shift {
             Route(isAM: true, dayInWeek: dayInWeek, ordersPerRoute: ordersPerRoute, hasRegion: hasRegion),
             Route(isAM: false, dayInWeek: dayInWeek, ordersPerRoute: ordersPerRoute, hasRegion: hasRegion)
         ]
-            return Shift(routes: routes, dayInWeek: dayInWeek)
-        }
+        return Shift(routes: routes, dayInWeek: dayInWeek)
+    }
     
     static func zeroPlusTwo(dayInWeek: Int, ordersPerRoute: Int, hasRegion: Bool) -> Shift {
         let routes = [
@@ -113,7 +113,7 @@ struct Shift {
             Route(isAM: false, dayInWeek: dayInWeek, ordersPerRoute: ordersPerRoute, hasRegion: hasRegion)
         ]
         return Shift(routes: routes, dayInWeek: dayInWeek)
-        }
+    }
     
     static func zeroPlusOne(dayInWeek: Int, ordersPerRoute: Int, hasRegion: Bool) -> Shift {
         let routes = [
@@ -121,5 +121,5 @@ struct Shift {
             Route(isAM: false, dayInWeek: dayInWeek, ordersPerRoute: ordersPerRoute, hasRegion: hasRegion)
         ]
         return Shift(routes: routes, dayInWeek: dayInWeek)
-        }
+    }
 }

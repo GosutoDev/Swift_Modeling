@@ -23,7 +23,7 @@ class Route {
     }
     
     let isAM: Bool
-
+    
     var ordersPerRoute: Int
     
     var hasRegion: Bool
