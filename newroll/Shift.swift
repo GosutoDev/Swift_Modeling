@@ -9,20 +9,29 @@ import Foundation
 
 struct Shift {
     
-    let routes: [Route]
+    init(routes: [Route], dayInWeek: Int) {
+        self._dayInWeek = dayInWeek
+        self.routes = routes
+    }
     
-    let perShiftEquipmentRent = 30
+    private let _dayInWeek: Int
+        
+    var routes: [Route] = []
     
-    var isOnlyOneRoute: Bool
+    let perShiftEquipmentRent = 30.0
     
-    var regionRate: Int {
-        let dayInWeek = routes.first?.orderPayRate.dayInWeek
+
+    var isOnlyOneRoute: Bool {
+        return routes.count == 1
+    }
+    
+    var regionRate: Double {
         let possibleDays = [2, 5, 7]
-        var regionRate = 0
+        var regionRate = 0.0
         
         for route in routes {
             if route.hasRegion {
-                if possibleDays.contains(where: {$0 == dayInWeek}) {
+                if possibleDays.contains(where: {$0 == _dayInWeek}) {
                     if isOnlyOneRoute {
                         regionRate = 500
                     } else {
@@ -34,40 +43,83 @@ struct Shift {
         return regionRate
     }
     
-    var bonusTwoRoute: Int {
-        var bonusRate = 0
-        let possibleDays = [1, 4, 5, 7]
-        
-        if !isOnlyOneRoute {
-            if possibleDays.contains(where: {$0 == routes.first?.orderPayRate.dayInWeek}) {
-                bonusRate = 300
-            }
-        }
-        
-        return bonusRate
-    }
-    
-    var bonusOneRoute: Int {
-        var bonusRate = 0
-        let possibleDays = [6, 7]
-        
+    var bonus: Double {
+        var bonus = 0.0
+        let hasAMRoute = routes.contains(where: { $0.isAM == true })
+        let isWeekend = [6,7].contains(_dayInWeek)
+        let isBonusDay = [1,4,5,7].contains(_dayInWeek)
+
         if isOnlyOneRoute {
-            if routes.contains(where: { $0.orderPayRate.isAM == true }) && possibleDays.contains(where: {$0 == routes.first?.orderPayRate.dayInWeek}) {
-                bonusRate += 150
+            if hasAMRoute && isWeekend {
+                bonus += 150.0
             }
-            if routes.contains(where: { $0.orderPayRate.isAM == false }) {
-                bonusRate += 150
+            if !hasAMRoute {
+                bonus += 150.0
+            }
+        } else {
+            if !hasAMRoute && isBonusDay {
+                bonus += 300.0
             }
         }
-        
-        return bonusRate
+    
+        return bonus
     }
     
-    var totalShiftEarn: Int {
-        var total = 0
-        for route in routes {
-            total += route.totalEarnPerRoute
+    func getOrderPayRate(route : Route) -> Double{
+        let isPremiumRate = (route.isAM && _dayInWeek == 6) || (!route.isAM && _dayInWeek != 6)
+        var baseRate = 25.0
+        
+        if isPremiumRate {
+            baseRate = 30.0
         }
-        return total + bonusOneRoute + bonusTwoRoute - perShiftEquipmentRent + regionRate
+        
+        let variableOrderRate = 28.0
+
+        var total = baseRate + variableOrderRate
+        
+        return total
     }
+    
+    var totalOrderEarnings: Double {
+        var total = 0.0
+        
+        routes.forEach { route in
+            total += route.totalEarnings
+        }
+        total = total - perShiftEquipmentRent + bonus + regionRate
+        
+        return total
+    }
+    
+    var totalShiftEarn: Double {
+        var total = 0.0
+        for route in routes {
+            total += route.totalEarnings
+        }
+        return total + bonus - perShiftEquipmentRent + regionRate
+    }
+    
+    static func onePlusOne(dayInWeek: Int, ordersPerRoute: Int, hasRegion: Bool) -> Shift {
+        let routes = [
+            Route(isAM: true, dayInWeek: dayInWeek, ordersPerRoute: ordersPerRoute, hasRegion: hasRegion),
+            Route(isAM: false, dayInWeek: dayInWeek, ordersPerRoute: ordersPerRoute, hasRegion: hasRegion)
+        ]
+            return Shift(routes: routes, dayInWeek: dayInWeek)
+        }
+    
+    static func zeroPlusTwo(dayInWeek: Int, ordersPerRoute: Int, hasRegion: Bool) -> Shift {
+        let routes = [
+            Route(isAM: false, dayInWeek: dayInWeek, ordersPerRoute: ordersPerRoute, hasRegion: hasRegion),
+            Route(isAM: false, dayInWeek: dayInWeek, ordersPerRoute: ordersPerRoute, hasRegion: hasRegion)
+        ]
+        return Shift(routes: routes, dayInWeek: dayInWeek)
+        }
+    
+    static func zeroPlusOne(dayInWeek: Int, ordersPerRoute: Int, hasRegion: Bool) -> Shift {
+        let routes = [
+            Route(isAM: true, dayInWeek: dayInWeek, ordersPerRoute: ordersPerRoute, hasRegion: hasRegion),
+            Route(isAM: false, dayInWeek: dayInWeek, ordersPerRoute: ordersPerRoute, hasRegion: hasRegion)
+        ]
+        return Shift(routes: routes, dayInWeek: dayInWeek)
+        }
 }

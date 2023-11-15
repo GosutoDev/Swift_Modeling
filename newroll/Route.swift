@@ -13,40 +13,27 @@ import Foundation
 
 class Route {
     
+    private let _dayInWeek: Int
+    
     init(isAM: Bool, dayInWeek: Int, ordersPerRoute: Int, hasRegion: Bool) {
         self.ordersPerRoute = ordersPerRoute
-        self.orderPayRate = OrderPayRate(isAM: isAM, dayInWeek: dayInWeek)
         self.hasRegion = hasRegion
+        self.isAM = isAM
+        self._dayInWeek = dayInWeek
     }
     
-    var orderPayRate: OrderPayRate
-    
+    let isAM: Bool
+
     var ordersPerRoute: Int
     
     var hasRegion: Bool
     
-    let routeRate = 250
-    
-    let perRouteCarRent = 120
-    
-    var tip: Int {
-        ordersPerRoute * 10
+    var tipTotal: Double {
+        Double(ordersPerRoute) * Rates.averageTip
     }
     
-    var totalEarnPerRoute: Int {
-        return (orderPayRate.totalOrderRate * ordersPerRoute) + routeRate - perRouteCarRent + tip
+    var totalEarnings: Double {
+        return (OrderPayRate.getOrderPayRate(dayInWeek: _dayInWeek, isAM: isAM) * Double(ordersPerRoute)) + Rates.routeRate - Rates.perRouteCarRent + tipTotal
     }
-    
-    static var routeOptions: [RouteOption : Route] = [:]
-    
-    
-//    func getRouteOptions(ordersPerRoute: Int) -> [RouteOption : Route] {
-//        
-//        
-//        for dayInWeek in 1...7 {
-//            let routeOptions = [RouteOption.localAM : Route(isAM: true, dayInWeek: dayInWeek, ordersPerRoute: ordersPerRoute, hasRegion: false)]
-//        }
-//        
-//        
-//    }
 }
+
