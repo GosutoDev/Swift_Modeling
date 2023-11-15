@@ -23,7 +23,7 @@ struct OrderPayRate {
             baseRate = 30.0
         }
         
-        var total = baseRate + variableOrderRate
+        let total = baseRate + variableOrderRate
         
         return total
     }

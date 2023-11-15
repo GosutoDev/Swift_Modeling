@@ -75,7 +75,7 @@ struct Shift {
         
         let variableOrderRate = 28.0
 
-        var total = baseRate + variableOrderRate
+        let total = baseRate + variableOrderRate
         
         return total
     }
